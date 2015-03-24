@@ -14,12 +14,41 @@ import com.google.common.collect.Lists;
 @WebService
 public interface MyService {
 
-	@XmlRootElement
-	public static class CallInRequest {
-		private String callId;
+	public static class Context {
+		private String serviceCode;
 		private String session;
-		
-		private List<Param> params;
+
+		protected Context() {
+			serviceCode = "";
+			session = "";
+		}
+
+		public Context(final String serviceCode, final String session) {
+			this.serviceCode = serviceCode;
+			this.session = session;
+		}
+
+		public String getServiceCode() {
+			return serviceCode;
+		}
+
+		public void setServiceCode(String serviceCode) {
+			this.serviceCode = serviceCode;
+		}
+
+		public String getSession() {
+			return session;
+		}
+
+		public void setSession(String session) {
+			this.session = session;
+		}
+	}
+
+	@XmlRootElement
+	public static class CallSIClient {
+		private Context context;
+		private List<Param> parameters;
 		
 		protected CallInRequest() {
 			callId = "";
@@ -60,25 +89,25 @@ public interface MyService {
 	}
 	
 	public static class Param {
-		private String key;
+		private String name;
 		private String value;
 
 		protected Param() {
-			key = "";
+			name = "";
 			value = "";
 		}
 
-		public Param(final String key, final String value) {
-			this.key = key;
+		public Param(final String name, final String value) {
+			this.name = name;
 			this.value = value;
 		}
 
-		public String getKey() {
-			return key;
+		public String getName() {
+			return name;
 		}
 
-		public void setKey(String key) {
-			this.key = key;
+		public void setName(String name) {
+			this.name = name;
 		}
 
 		public String getValue() {
@@ -91,20 +120,30 @@ public interface MyService {
 	}
 	
 	@XmlRootElement
-	public static class Return {
-		private String text;
+	public static class CallSIResponse {
+		private String returnCode;
+		private String message;
+		private String number;
 		
-		public Return(final String text) {
-			this.text = text;
+		public CallSIResponse(final String returnCode, final String message, final String number) {
+			this.returnCode = returnCode;
+			this.message = message;
+			this.number = number;
 		}
 		
-		protected Return() {
+		protected CallSIResponse() {
 			this.text = "";
 		}
 
-		public String getText() { return text; }
+		public String getMessage() { return message; }
 		
-		public void setText(final String text) { this.text = text; }
+		public void setMessage(final String message) { this.message = message; }
+
+		public String getMessage() { return message; }
+		
+		public void setMessage(final String message) { this.message = message; }
+
+		
 	}
 
 	@WebMethod(operationName = "ask")
