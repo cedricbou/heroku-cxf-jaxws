@@ -50,40 +50,30 @@ public interface MyService {
 		private Context context;
 		private List<Param> parameters;
 		
-		protected CallInRequest() {
-			callId = "";
-			session = "";
-			params = new ArrayList<Param>();
+		protected CallSIClient() {
+			this.context = new Context();
+			this.parameters = new ArrayList<Param>();
 		}
 
-		public CallInRequest(final String callId, final String session, final List<Param> params) {
-			this.callId = callId;
-			this.session = session;
-			this.params = Lists.newArrayList(params);			
+		public CallSIClient(final String serviceCode, final String session, final List<Param> params) {
+			this.context = new Context(serviceCode, session);
+			this.parameters = Lists.newArrayList(params);			
 		}
 
-		public String getCallId() {
-			return callId;
+		public Context getContext() {
+			return context;
 		}
 
-		public void setCallId(String callId) {
-			this.callId = callId;
+		public void setContext(Context context) {
+			this.context = context;
 		}
 
-		public String getSession() {
-			return session;
+		public List<Param> getParameters() {
+			return parameters;
 		}
 
-		public void setSession(String session) {
-			this.session = session;
-		}
-
-		public List<Param> getParams() {
-			return params;
-		}
-
-		public void setParams(List<Param> params) {
-			this.params = params;
+		public void setParameters(List<Param> params) {
+			this.parameters = params;
 		}
 
 	}
@@ -132,21 +122,38 @@ public interface MyService {
 		}
 		
 		protected CallSIResponse() {
-			this.text = "";
+			this.returnCode = "";
+			this.message = "";
+			this.number = "";		}
+
+		public String getReturnCode() {
+			return returnCode;
 		}
 
-		public String getMessage() { return message; }
-		
-		public void setMessage(final String message) { this.message = message; }
+		public void setReturnCode(String returnCode) {
+			this.returnCode = returnCode;
+		}
 
-		public String getMessage() { return message; }
-		
-		public void setMessage(final String message) { this.message = message; }
+		public String getMessage() {
+			return message;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public String getNumber() {
+			return number;
+		}
+
+		public void setNumber(String number) {
+			this.number = number;
+		}
 
 		
 	}
 
-	@WebMethod(operationName = "ask")
-	@WebResult(name = "callInResponse", partName = "myResponse")
-	public Return ask(final @WebParam(name = "callInRequest") CallInRequest request);
+	@WebMethod(operationName = "callSIL")
+	@WebResult(name = "callSIRespons", partName = "myResponse")
+	public CallSIResponse ask(final @WebParam(name = "callSIRequest") CallSIClient request);
 }

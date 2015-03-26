@@ -9,15 +9,20 @@ import com.google.common.collect.Lists;
 @WebService
 public class MyServiceImpl implements MyService {
 
+	
 	@Override
-	public Return ask(final CallInRequest request) {
-		return new Return(
-			request.getSession() + "-" + request.getCallId() + ":" + Joiner.on(", ").join(Lists.transform(request.getParams(), new Function<Param, String>() { 
+	public CallSIResponse ask(CallSIClient request) {
+		return new CallSIResponse("OK", 
+			request.getContext().getServiceCode() 
+				+ "-" + request.getContext().getSession() 
+				+ ":" 
+				+ Joiner.on(", ")
+					.join(Lists.transform(request.getParameters(), new Function<Param, String>() { 
 				@Override
 				public String apply(Param arg0) {
-					return arg0.getKey() + " => " + arg0.getValue();
+					return arg0.getName() + " => " + arg0.getValue();
 				}
-			})));
+			})), "");
 	}
 
 }
