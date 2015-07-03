@@ -114,6 +114,7 @@ public interface MyService {
 		private String returnCode;
 		private String message;
 		private String number;
+		private String gael;
 		
 		public CallSIResponse(final String returnCode, final String message, final String number) {
 			this.returnCode = returnCode;
@@ -149,7 +150,14 @@ public interface MyService {
 		public void setNumber(String number) {
 			this.number = number;
 		}
-
+		
+		public String getGael() {
+			return gael;
+		}
+		
+		public void setGael(String g) {
+			this.gael = g;
+		}
 		
 	}
 
